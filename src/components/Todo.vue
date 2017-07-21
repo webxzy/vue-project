@@ -1,7 +1,7 @@
 <template>
   <div class="todo-list">
     <h2>todo-list</h2>
-    <form v-on:submit="submit">
+    <form v-on:submit.prevent="submit">
       <input v-model="input" type="text" />
       <button>添加</button>
     </form>
@@ -24,13 +24,12 @@ export default {
     }
   },
   methods: {
-    submit: function (e) {
-      e.preventDefault();
+    submit() {
       if (this.input.trim() === '') return;
       this.items.push({ id: this.items.length + 1, text: this.input });
       this.input = '';
     },
-    remove: function(id) {
+    remove(id) {
       this.items = this.items.filter(item => item.id !== id);
     }
   }
