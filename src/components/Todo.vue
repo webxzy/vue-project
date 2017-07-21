@@ -1,14 +1,14 @@
 <template>
   <div class="todo-list">
     <h2>todo-list</h2>
-    <form action="#" v-on:submit="submit">
+    <form v-on:submit="submit">
       <input v-model="input" type="text" />
       <button>添加</button>
     </form>
     <ul class="list">
       <li v-for="(item, index) in items" :key="item.id">
         {{item.text}}
-        <span v-on:click="items.splice(index, 1)">&times;</span>
+        <span v-on:click="remove(item.id)">&times;</span>
       </li>
     </ul>
   </div>
@@ -25,9 +25,13 @@ export default {
   },
   methods: {
     submit: function (e) {
+      e.preventDefault();
       if (this.input.trim() === '') return;
-      this.items.push({ id: this.items.length + 1, text: this.input })
+      this.items.push({ id: this.items.length + 1, text: this.input });
       this.input = '';
+    },
+    remove: function(id) {
+      this.items = this.items.filter(item => item.id !== id);
     }
   }
 }
